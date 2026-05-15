@@ -1,17 +1,58 @@
 package org.example;
 
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
+
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("Hello and welcome!"));
+public class Main extends Application {
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
-        }
+    @Override
+    public void start(Stage stage) throws Exception {
+        Label nombreLabel = new Label("Nombre: ");
+        Label emailLabel = new Label("Email: ");
+        TextField nombreField = new TextField();
+        TextField emailField = new TextField();
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.add(nombreLabel, 0, 0);
+        grid.add(nombreField, 1, 0);
+        grid.add(emailLabel, 0, 1);
+        grid.add(emailField, 1, 1);
+
+        Button btnEnviar = new Button("Enviar");
+        btnEnviar.setOnAction(e -> {
+           String nombre = nombreField.getText();
+           String email = emailField.getText();
+           if (nombre.isEmpty() || email.isEmpty()) {
+               Alert alert = new Alert(Alert.AlertType.WARNING);
+               alert.setTitle("Advertencia");
+               alert.setContentText("Campos obrigatos");
+               alert.showAndWait();
+           }else  {
+               System.out.println("Nombre: " + nombre);
+               System.out.println("Email: " + email);
+           }
+        });
+
+        grid.add(btnEnviar, 2, 1);
+
+        Scene scene = new Scene(grid);
+        stage.setScene(scene);
+        stage.setTitle("Manejo Eventos");
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
